@@ -1,0 +1,6 @@
+pip install python-dotenv - mert kell a .env-hez
+pip install flask - csatlakozik az adatbazishoz JSON formába.
+pip install mysql-connector-python - maga mysql hez csatlakozik
+pip install requests -API -hoz
+python.exe -m pip install --upgrade pip
+
