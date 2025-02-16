@@ -18,10 +18,3 @@ use Illuminate\Validation\Rule;
 Route::get('/register', [UserController::class,'create']);
 Route::post('/users', [UserController::class,'store']);
 //napelem projecthez
-
-Route::prefix('api')->group(function () {
-    Route::get('/felhasznalo', [UserController::class, 'getUsers']);
-    Route::post('/felhasznalo', [UserController::class, 'addUser']);
-    Route::get('/login', [UserController::class, 'bejelentkezes']);
-
-});

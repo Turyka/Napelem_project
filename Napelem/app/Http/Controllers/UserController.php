@@ -47,7 +47,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->username = $request->username;
-        $user->password = Hash::make($request->password); // Hash password
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return response()->json([
@@ -56,22 +56,20 @@ class UserController extends Controller
         ], 201); 
     }
 
-  public function Bejelentkezes(Request $request)
+public function bejelentkezes(Request $request)
 {
+    $request->validate([
+        'name' => 'required|string',
+        'password' => 'required|string',
+    ]);
+
     $user = User::where('name', $request->name)->first();
 
-    // Log the user to verify it's found
-    Log::info('User found:', ['user' => $user]);
-
-    if (!$user) {
-        return response()->json(['status' => 'error', 'message' => 'User not found'], 401);
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json(['status' => 'error', 'message' => 'Nem megfelelo adat'], 401);
     }
 
-    if (!Hash::check($request->password, $user->password)) {
-        return response()->json(['status' => 'error', 'message' => 'Password mismatch'], 401);
-    }
-
-    $token = $user->createToken('API Token')->plainTextToken;
+    $token = $user->createToken($request->name)->plainTextToken;
 
     return response()->json(['status' => 'success', 'token' => $token], 200);
 }
