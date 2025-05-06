@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HirController;
 use Illuminate\Validation\Rule;
 
 
@@ -15,6 +16,11 @@ use Illuminate\Validation\Rule;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/register', [UserController::class,'create']);
-Route::post('/users', [UserController::class,'store']);
 //napelem projecthez
+//Route::get('/register', [UserController::class,'create']);
+//Route::post('/users', [UserController::class,'store']);
+
+Route::get('/hirek', [HirController::class, 'index']);
+Route::get('/hirek/scrape', [HirController::class, 'scrape']); // optional manual trigger
+
+

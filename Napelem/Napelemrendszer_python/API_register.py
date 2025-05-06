@@ -1,7 +1,7 @@
 import requests
 from dotenv import load_dotenv
 import os
-def login_to_laravel_api(username, password):
+def register_to_laravel_api(username, password):
     load_dotenv()
     url = os.getenv("API_LOGIN_KEY")
 
@@ -10,17 +10,20 @@ def login_to_laravel_api(username, password):
         "password": password
     }
 
+    headers = {
+        "Content-Type": "application/json"
+    }
+
     try:
         # API
         response = requests.post(url, json=data)
 
         # ha jo
         if response.status_code == 200:
-            # megkapja ha jo
-            token = response.json().get("token")
-            return token, None  
+            response = requests.post(url, json=data, headers=headers)
+            return response.json()
         else:
-            error_message = response.json().get("message", "Nem jo a user vagy a jelszo")
+            error_message = response.json().get("message", "nem sikerult")
             return None, error_message
     except requests.exceptions.RequestException as e:
         return None, f"Ez az errorr: {e}"   
